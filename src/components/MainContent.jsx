@@ -2,7 +2,9 @@ import React from 'react'
 
 function MainContent({style}) {
   return (
-    <div style={style}>MainContent</div>
+    <div className='overflow-hidden' style={style}>
+        MainContent
+    </div>
   )
 }
 

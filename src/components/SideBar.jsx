@@ -1,8 +1,17 @@
 import React from 'react'
+import SideBarButtons from './SideBarButtons'
 
 function SideBar({style}) {
   return (
-    <div style={style}>SideBar</div>
+    <div className='overflow-hidden pt-2 bg-gray-700' style={style} >
+      <SideBarButtons 
+        className="hover:bg-gray-600 rounded-sm text-white w-full py-1" 
+        info={"Home"}  />
+      <SideBarButtons 
+        className="hover:bg-gray-600 rounded-sm text-white w-full py-1" 
+        info={"Profile"}  />
+
+    </div>
   )
 }
 
