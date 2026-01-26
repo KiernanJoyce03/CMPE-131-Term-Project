@@ -1,8 +1,8 @@
 import React from 'react'
 
-function SideBar() {
+function SideBar({style}) {
   return (
-    <div>SideBar</div>
+    <div style={style}>SideBar</div>
   )
 }
 
