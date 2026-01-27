@@ -1,9 +1,10 @@
 import React from 'react'
+import Carousel from './Carousel'
 
 function MainContent({style}) {
   return (
-    <div className='overflow-hidden' style={style}>
-        MainContent
+    <div className='min-w-0' style={style}>
+        <Carousel title={"Top Books"}/>
     </div>
   )
 }
