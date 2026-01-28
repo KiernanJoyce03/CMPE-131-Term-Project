@@ -1,10 +1,16 @@
 import React from 'react'
-import Carousel from './Carousel'
+import CarouselContainer from './CarouselContainer'
+
 
 function MainContent({style}) {
+
+  
+  
   return (
-    <div className='min-w-0' style={style}>
-        <Carousel title={"Top Books"}/>
+    <div className='flex justify-center' style={style}>
+
+      <CarouselContainer/>
+    
     </div>
   )
 }
