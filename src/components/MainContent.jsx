@@ -10,7 +10,7 @@ function MainContent({style}) {
     <div className='flex justify-center' style={style}>
 
       <CarouselContainer/>
-    
+      <CarouselContainer/>
     </div>
   )
 }
