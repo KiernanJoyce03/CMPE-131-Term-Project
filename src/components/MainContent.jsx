@@ -8,9 +8,9 @@ function MainContent({style}) {
   
   return (
     <div className='flex justify-center' style={style}>
-
+        
       <CarouselContainer/>
-      <CarouselContainer/>
+      {/* <CarouselContainer/> */}
     </div>
   )
 }
