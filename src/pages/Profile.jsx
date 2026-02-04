@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Sidebar from '../components/sidebar.jsx/index.js'
+import Sidebar from '../components/SidebarContainer.jsx/index.js'
 
 
 function Profile() {
