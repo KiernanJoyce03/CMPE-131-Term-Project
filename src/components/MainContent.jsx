@@ -7,10 +7,11 @@ function MainContent({style}) {
   
   
   return (
-    <div className='flex justify-center' style={style}>
+    <div className='flex justify-center flex-col overflow-auto min-h-screen bg-gray-900 items-center' style={style}>
         
       <CarouselContainer/>
-      {/* <CarouselContainer/> */}
+      <CarouselContainer/>
+      <CarouselContainer/>
     </div>
   )
 }
