@@ -7,9 +7,12 @@ import { DropdownMenu,DropdownMenuContent,DropdownMenuGroup,DropdownMenuItem,
 
 import tempPhoto from '../assets/person-icon.jpg'
 import { Link } from 'react-router-dom'
+import {Switch} from '@/components/ui/switch'
+import {Label} from '@/components/ui/label'
+import { CiCloudMoon, CiCloudSun } from "react-icons/ci";
 
 function Header({style}) {
-
+  const [darkMode, setDarkMode] = React.useState(false)
 
 
   return (
@@ -41,6 +44,13 @@ function Header({style}) {
               <DropdownMenuSeparator/>
               <DropdownMenuItem className=' focus:bg-gray-200'>Books</DropdownMenuItem>
               <DropdownMenuItem className=' focus:bg-gray-200'>Settings</DropdownMenuItem>
+                <div className='flex px-1 py-2 item-center'>
+                  <Switch checked ={darkMode} onCheckedChange ={()=>{setDarkMode(!darkMode)}} ></Switch>
+                <Label className='pl-1 text-2xl'>{darkMode ? <CiCloudSun/> : <CiCloudMoon/> }</Label>
+                </div>
+                
+              
+              
             </DropdownMenuGroup>
           </DropdownMenuContent>
          </DropdownMenu>
