@@ -10,6 +10,8 @@ import MainLayout from './Layouts/MainLayout.jsx'
 import MainContent from './components/MainContent.jsx'
 import ProfileLayout from './Layouts/ProfileLayout.jsx'
 import Details from './pages/ProfileSettings/Details.jsx'
+import Settings from './pages/ProfileSettings/Settings.jsx'
+import Books from './pages/ProfileSettings/Books.jsx'
 
 
 const router = createBrowserRouter([
@@ -27,9 +29,15 @@ const router = createBrowserRouter([
     element:<ProfileLayout/>,
     errorElement: <ErrorPage/>,
     children:[{
-        path:'details',
+        path:'',
         element:<Details/>
-      },]
+      },{
+        path:'settings',
+        element:<Settings/>
+      },{
+        path:'books',
+        element:<Books/>
+      }]
   }, 
      
 ]);

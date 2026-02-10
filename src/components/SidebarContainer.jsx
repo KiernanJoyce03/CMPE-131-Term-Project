@@ -16,10 +16,11 @@ import { Avatar,
   AvatarImage,
  } from '@/components/ui/avatar'
 
-import { CiHome } from "react-icons/ci";
-import { CiSettings } from "react-icons/ci";
+import { CiHome, CiSettings } from "react-icons/ci";
+import { IoBookOutline } from "react-icons/io5";
 import { GalleryVerticalEnd } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
 
 
 
@@ -32,7 +33,7 @@ function SidebarContainer() {
           <SidebarMenu >
             <SidebarMenuButton className='hover:bg-gray-200' asChild >
 
-              <Link to='/' >
+              <Link to='/profile' >
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex  items-center  rounded-lg  w-full ">
                   <Avatar size='lg'>
                     <AvatarImage src={tempPhoto} alt="User Profile Picture" />
@@ -59,14 +60,24 @@ function SidebarContainer() {
                 </SidebarMenuBadge>
                 Home
                 </Link>
-                
               </SidebarMenuButton>
               
-              <SidebarMenuButton className='hover:bg-gray-300'>
-                <SidebarMenuBadge className='pr-3'>
-                  <CiSettings className='text-lg'/>
-                </SidebarMenuBadge>
-                Settings
+              <SidebarMenuButton className='hover:bg-gray-300' asChild>
+                <Link to='/profile/settings'>
+                  <SidebarMenuBadge className='pr-3'>
+                    <CiSettings className='text-lg'/>
+                  </SidebarMenuBadge>
+                  Settings
+                </Link>
+              </SidebarMenuButton>
+
+              <SidebarMenuButton className='hover:bg-gray-300' asChild>
+                <Link to='/profile/books'>
+                  <SidebarMenuBadge className='pr-3.75'>
+                    <IoBookOutline className='text-md'/>
+                  </SidebarMenuBadge>
+                  Books
+                </Link>
               </SidebarMenuButton>
               
             </SidebarMenu>

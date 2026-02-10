@@ -37,13 +37,17 @@ function Header({style}) {
                 <Link to='/profile' className=' focus:bg-gray-200'>Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem className=' focus:bg-gray-200'>
-                Billing
+                <Link to=''>Billing</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuGroup>
               <DropdownMenuSeparator/>
-              <DropdownMenuItem className=' focus:bg-gray-200'>Books</DropdownMenuItem>
-              <DropdownMenuItem className=' focus:bg-gray-200'>Settings</DropdownMenuItem>
+              <DropdownMenuItem className=' focus:bg-gray-200'>
+                <Link to=''>Books</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className=' focus:bg-gray-200'>
+                <Link to='/profile/settings'>Settings</Link>
+              </DropdownMenuItem>
                 <div className='flex px-1 py-2 item-center'>
                   <Switch checked ={darkMode} onCheckedChange ={()=>{setDarkMode(!darkMode)}} ></Switch>
                 <Label className='pl-1 text-2xl'>{darkMode ? <CiCloudSun/> : <CiCloudMoon/> }</Label>
