@@ -20,9 +20,12 @@ function Profile() {
       
       
       <SidebarInset className='min-h-0 flex-1 bg-gray-900'>
-        <main className='min-h-0 overflow-y-auto' >
+        <main className='min-h-0 overflow-y-auto h-full' >
+
+          x
           <div className=''>
-            <SidebarTrigger className="-ml-1 text-gray-50" />
+            <SidebarTrigger className=' text-gray-50 fixed top-4 left-[calc(var(--sidebard-width)+1rem)]
+            z-50 transition-[left] duration-200 ease-in-out data-[collapsed=true]:left-[calc(var(--sidebard-width)+1rem)]'  />
           </div>
           
           <Outlet />

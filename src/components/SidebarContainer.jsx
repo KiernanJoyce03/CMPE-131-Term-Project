@@ -31,7 +31,7 @@ function SidebarContainer() {
       <Sidebar side='left'>
         <SidebarHeader >
           <SidebarMenu >
-            <SidebarMenuButton className='hover:bg-gray-200' asChild >
+            <SidebarMenuButton className='hover:bg-gray-200 h-12' asChild >
 
               <Link to='/profile' >
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex  items-center  rounded-lg  w-full ">
