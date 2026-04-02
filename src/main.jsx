@@ -12,6 +12,8 @@ import ProfileLayout from './Layouts/ProfileLayout.jsx'
 import Details from './pages/ProfileSettings/Details.jsx'
 import Settings from './pages/ProfileSettings/Settings.jsx'
 import Books from './pages/ProfileSettings/Books.jsx'
+import {store} from './Redux/Store.js'
+import { Provider } from 'react-redux'
 
 
 const router = createBrowserRouter([
@@ -43,7 +45,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+  <Provider store={store}>
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
+  </Provider>
 )

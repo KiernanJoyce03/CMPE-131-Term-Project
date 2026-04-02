@@ -11,14 +11,24 @@ import {Switch} from '@/components/ui/switch'
 import {Label} from '@/components/ui/label'
 import { CiCloudMoon, CiCloudSun } from "react-icons/ci";
 
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleDarkMode } from '../Redux/DarkMode/darkMode'
+
+
 function Header({style}) {
-  const [darkMode, setDarkMode] = React.useState(false)
+  
+
+  const dispatch = useDispatch();
+  const darkModeState = useSelector((state) => state.darkMode.isDarkMode);
+  React.useEffect(() => {
+  document.documentElement.classList.toggle('dark', darkModeState);
+}, [darkModeState]);
 
 
   return (
-    <div className=" overflow-hidden border-b-2 border-gray-600 flex items-center justify-between" style={style}>
-      <h1 className=" pl-2 text-white text-4xl ">
-        <Link to="/" className=' hover:text-gray-400'>
+    <div className=" overflow-hidden border-b-2 border-border flex items-center justify-between bg-background" style={style}>
+      <h1 className=" pl-2 text-foreground text-4xl ">
+        <Link to="/" className=' hover:text-muted-foreground'>
         My Book Tracker </Link>
       </h1>
         <div className='pr-2 pt-2'>
@@ -32,25 +42,25 @@ function Header({style}) {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuGroup>
-              <DropdownMenuLabel className='text-gray-500 text-[12px]'>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel className='text-muted-foreground text-[12px]'>My Account</DropdownMenuLabel>
               <DropdownMenuItem  asChild>
-                <Link to='/profile' className=' focus:bg-gray-200'>Profile</Link>
+                <Link to='/profile' className=' focus:bg-accent'>Profile</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className=' focus:bg-gray-200'>
+              <DropdownMenuItem className=' focus:bg-accent'>
                 <Link to=''>Billing</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuGroup>
               <DropdownMenuSeparator/>
-              <DropdownMenuItem className=' focus:bg-gray-200'>
+              <DropdownMenuItem className=' focus:bg-accent'>
                 <Link to=''>Books</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className=' focus:bg-gray-200'>
+              <DropdownMenuItem className=' focus:bg-accent'>
                 <Link to='/profile/settings'>Settings</Link>
               </DropdownMenuItem>
-                <div className='flex px-1 py-2 item-center'>
-                  <Switch checked ={darkMode} onCheckedChange ={()=>{setDarkMode(!darkMode)}} ></Switch>
-                <Label className='pl-1 text-2xl'>{darkMode ? <CiCloudSun/> : <CiCloudMoon/> }</Label>
+                <div className='flex px-1 py-2 items-center'>
+                  <Switch checked ={darkModeState} onCheckedChange ={()=>{dispatch(toggleDarkMode())}} ></Switch>
+                <Label className='pl-1 text-2xl'>{darkModeState    ? <CiCloudSun/> : <CiCloudMoon/> }</Label>
                 </div>
                 
               

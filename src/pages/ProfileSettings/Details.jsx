@@ -1,12 +1,7 @@
 import React from 'react'
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { Avatar,AvatarImage } from '@/components/ui/avatar'
 import tempPhoto from '../../assets/person-icon.jpg'
@@ -15,7 +10,7 @@ import { Button } from '@/components/ui/button'
 
 function Details() {
   return (
-    <div className='flex flex-col  h-full w-full bg-amber-800'>
+    <div className='flex flex-col  h-full w-full bg-background'>
 
       
       <div className='flex justify-center '>

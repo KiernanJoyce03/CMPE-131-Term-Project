@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Outlet } from 'react-router-dom'
 import SidebarContainer from '../components/SidebarContainer.jsx'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar.jsx';
-import { Sidebar } from 'lucide-react';
 
 
 function Profile() {
@@ -19,7 +18,7 @@ function Profile() {
         
       
       
-      <SidebarInset className='min-h-0 flex-1 bg-gray-900'>
+      <SidebarInset className='min-h-0 flex-1 bg-background'>
         <main className='min-h-0 overflow-y-auto h-full' >
 
           x

@@ -56,9 +56,9 @@ function SidebarContainer() {
               <SidebarMenuButton className='hover:bg-gray-300' asChild>
                 <Link to='/' >
                   <SidebarMenuBadge className='pr-3' >
-                  <CiHome className='text-lg'/>
-                </SidebarMenuBadge>
-                Home
+                    <CiHome className='text-lg'/>
+                  </SidebarMenuBadge>
+                  Home
                 </Link>
               </SidebarMenuButton>
               
@@ -79,6 +79,8 @@ function SidebarContainer() {
                   Books
                 </Link>
               </SidebarMenuButton>
+
+              
               
             </SidebarMenu>
         </SidebarContent>
