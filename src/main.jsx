@@ -12,8 +12,9 @@ import ProfileLayout from './Layouts/ProfileLayout.jsx'
 import Details from './pages/ProfileSettings/Details.jsx'
 import Settings from './pages/ProfileSettings/Settings.jsx'
 import Books from './pages/ProfileSettings/Books.jsx'
-import {store} from './Redux/Store.js'
+import { store, persistor } from './Redux/Store.js'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 const router = createBrowserRouter([
@@ -46,8 +47,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>
+    <PersistGate loading={null} persistor={persistor}>
+      <StrictMode>
+        <RouterProvider router={router} />
+      </StrictMode>
+    </PersistGate>
   </Provider>
 )

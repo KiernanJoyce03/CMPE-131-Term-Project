@@ -19,7 +19,7 @@ const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
           <Carousel opts={{
           align: 'center',
           loop: true,
-          slidesToscroll: 'auto',
+          slidesToScroll: 'auto',
         }} plugins={[plugin.current]} onMouseLeave={plugin.current.reset} onMouseEnter={plugin.current.stop}
         className='pt-4 w-full '>
           <CarouselContent className='gap-1'>
