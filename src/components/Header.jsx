@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleDarkMode } from '../Redux/DarkMode/darkMode'
 
 
-function Header({style}) {
+function Header() {
   
 
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function Header({style}) {
 
 
   return (
-    <div className=" overflow-hidden border-b-2 border-border flex items-center justify-between bg-background" style={style}>
+    <div className=" overflow-hidden border-b-2 border-border flex items-center justify-between bg-background">
       <h1 className=" pl-2 text-foreground text-4xl ">
         <Link to="/" className=' hover:text-muted-foreground'>
         My Book Tracker </Link>

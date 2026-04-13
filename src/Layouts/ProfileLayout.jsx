@@ -21,10 +21,10 @@ function Profile() {
       <SidebarInset className='min-h-0 flex-1 bg-background'>
         <main className='min-h-0 overflow-y-auto h-full' >
 
-          x
+          
           <div className=''>
-            <SidebarTrigger className=' text-gray-50 fixed top-4 left-[calc(var(--sidebard-width)+1rem)]
-            z-50 transition-[left] duration-200 ease-in-out data-[collapsed=true]:left-[calc(var(--sidebard-width)+1rem)]'  />
+            <SidebarTrigger className=' text-gray-50 fixed top-4 left-[calc(var(--sidebar-width)+1rem)]
+            z-50 transition-[left] duration-200 ease-in-out data-[collapsed=true]:left-[calc(var(--sidebar-width)+1rem)]'  />
           </div>
           
           <Outlet />
