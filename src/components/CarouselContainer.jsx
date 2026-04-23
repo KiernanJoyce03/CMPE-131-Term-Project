@@ -11,7 +11,7 @@ import Autoplay from "embla-carousel-autoplay"
 
 
 
-function CarouselContainer() {
+function CarouselContainer({bookArray}) {
 
 const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
   return (
