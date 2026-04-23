@@ -9,7 +9,7 @@ function MainContent({style}) {
     const fetchBooks = async () => {
       const res = await fetch('/api/books/search?q=fiction')
       const data = await res.json()
-      setBooks(data.items)
+      setBooks(data.items || [])
     }
     fetchBooks()
   }, [])

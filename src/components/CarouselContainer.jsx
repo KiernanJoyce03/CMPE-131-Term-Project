@@ -23,10 +23,10 @@ const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
         }} plugins={[plugin.current]} onMouseLeave={plugin.current.reset} onMouseEnter={plugin.current.stop}
         className='pt-4 w-full '>
           <CarouselContent className='gap-1'>
-            {Array.from({ length: 10 }).map((_, index) => (
-              <CarouselItem key={index} className='basis-1/2 md:basis-1/3 pl-4 lg:basis-1/5'>
+            {(bookArray || []).map((book, index) => (
+              <CarouselItem key={book.id ?? index} className='basis-1/2 md:basis-1/3 pl-4 lg:basis-1/5'>
                 <div className=''>
-                  <CardContainer index={index}/>
+                  <CardContainer book={book}/>
                 </div>
               </CarouselItem>
             ))}
