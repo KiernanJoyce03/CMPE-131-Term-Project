@@ -16,7 +16,7 @@ function CardContainer({ book }) {
             <img
               src={thumbnail}
               alt={title}
-              className='w-full h-full object-contain'
+              className='w-full h-full object-cover'
             />
           ) : (
             <div className='w-full h-full flex items-center justify-center bg-accent text-muted-foreground text-sm text-center px-2'>

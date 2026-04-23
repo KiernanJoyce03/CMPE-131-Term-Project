@@ -9,7 +9,9 @@ function MainContent({style}) {
     const fetchBooks = async () => {
       const res = await fetch('/api/books/search?q=fiction')
       const data = await res.json()
-      setBooks(data.items || [])
+      const items = data.items || []
+      items.forEach(book => console.log(book.volumeInfo?.title, book.volumeInfo?.imageLinks))
+      setBooks(items)
     }
     fetchBooks()
   }, [])
