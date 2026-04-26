@@ -8,10 +8,15 @@ function MainContent({style}) {
   useEffect(() => {
     const fetchBooks = async () => {
       const res = await fetch('/api/books/search?q=fiction')
-      const data = await res.json()
-      const items = data.items || []
-      items.forEach(book => console.log(book.volumeInfo?.title, book.volumeInfo?.imageLinks))
-      setBooks(items)
+      console.log('status:', res.status)
+      const text = await res.text()
+      console.log('raw response:', text)
+      try {
+        const data = JSON.parse(text)
+        setBooks(data.items || [])
+      } catch (e) {
+        console.error('JSON parse failed:', e)
+      }
     }
     fetchBooks()
   }, [])
