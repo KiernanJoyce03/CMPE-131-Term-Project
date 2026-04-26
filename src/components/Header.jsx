@@ -20,9 +20,6 @@ function Header() {
 
   const dispatch = useDispatch();
   const darkModeState = useSelector((state) => state.darkMode.isDarkMode);
-  React.useEffect(() => {
-  document.documentElement.classList.toggle('dark', darkModeState);
-}, [darkModeState]);
 
 
   return (

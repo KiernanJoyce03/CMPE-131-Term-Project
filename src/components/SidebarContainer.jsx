@@ -42,7 +42,7 @@ function SidebarContainer() {
         <SidebarMenu className='px-2'>
           <SidebarMenuItem>
             <SidebarMenuButton className='hover:bg-accent' asChild>
-              <Link to='/'>
+              <Link to='/home'>
                 <span className='pr-3'><CiHome className='text-lg'/></span>
                 Home
               </Link>

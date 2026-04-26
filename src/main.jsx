@@ -1,5 +1,6 @@
-import { StrictMode } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
+import { useSelector } from 'react-redux'
 import ErrorPage from './pages/ErrorPage.jsx'
 
 import './index.css'
@@ -18,6 +19,14 @@ import { store, persistor } from './Redux/Store.js'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
+
+function ThemeSync() {
+  const darkModeState = useSelector((state) => state.darkMode.isDarkMode)
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkModeState)
+  }, [darkModeState])
+  return null
+}
 
 const router = createBrowserRouter([
   {
@@ -59,6 +68,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
+      <ThemeSync />
       <StrictMode>
         <RouterProvider router={router} />
       </StrictMode>
