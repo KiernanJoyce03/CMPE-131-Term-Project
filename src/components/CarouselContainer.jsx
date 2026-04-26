@@ -15,7 +15,7 @@ function CarouselContainer({bookArray}) {
 
 const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
   return (
-    <div className='relative h-90 w-[80%]'>
+    <div className='relative h-70 w-[80%]'>
           <Carousel opts={{
           align: 'center',
           loop: true,

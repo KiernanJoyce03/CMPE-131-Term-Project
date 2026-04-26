@@ -12,6 +12,8 @@ import ProfileLayout from './Layouts/ProfileLayout.jsx'
 import Details from './pages/ProfileSettings/Details.jsx'
 import Settings from './pages/ProfileSettings/Settings.jsx'
 import Books from './pages/ProfileSettings/Books.jsx'
+import LandingLayout from './Layouts/LandingLayout.jsx'
+import LandingPage from './pages/LandingPage/LandingPage.jsx'
 import { store, persistor } from './Redux/Store.js'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -19,7 +21,16 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 const router = createBrowserRouter([
   {
-    path:'',
+    path:'/',
+    element: <LandingLayout/>,
+    errorElement: <ErrorPage/>,
+    children:[{
+      path:'',
+      element:<LandingPage/>
+    },]
+  },
+  {
+    path:'home',
     element: <MainLayout />,
     errorElement: <ErrorPage/>,
     children:[{

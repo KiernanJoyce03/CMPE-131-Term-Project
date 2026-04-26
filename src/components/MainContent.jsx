@@ -3,26 +3,19 @@ import { useEffect } from 'react'
 import CarouselContainer from './CarouselContainer'
 
 
-function MainContent({style}) {
+function MainContent() {
   const [books, setBooks] = React.useState([])
   useEffect(() => {
     const fetchBooks = async () => {
       const res = await fetch('/api/books/search?q=fiction')
-      console.log('status:', res.status)
-      const text = await res.text()
-      console.log('raw response:', text)
-      try {
-        const data = JSON.parse(text)
-        setBooks(data.items || [])
-      } catch (e) {
-        console.error('JSON parse failed:', e)
-      }
+      const data = await res.json()
+      setBooks(data.items || [])
     }
     fetchBooks()
   }, [])
 
   return (
-    <div className='flex flex-col bg-background items-center py-4 gap-6' style={style}>
+    <div className='flex flex-col bg-background items-center py-4 gap-6'>
         
       <CarouselContainer bookArray={books} />
       <CarouselContainer bookArray={books} />
