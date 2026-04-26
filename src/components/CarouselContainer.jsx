@@ -22,12 +22,10 @@ const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
           slidesToScroll: 'auto',
         }} plugins={[plugin.current]} onMouseLeave={plugin.current.reset} onMouseEnter={plugin.current.stop}
         className='pt-4 w-full '>
-          <CarouselContent className='gap-1'>
+          <CarouselContent className='-ml-2'>
             {(bookArray || []).map((book, index) => (
-              <CarouselItem key={book.id ?? index} className='basis-1/2 md:basis-1/3 pl-4 lg:basis-1/5'>
-                <div className=''>
-                  <CardContainer book={book}/>
-                </div>
+              <CarouselItem key={book.id ?? index} className='basis-1/3 md:basis-1/4 pl-2 lg:basis-1/6'>
+                <CardContainer book={book}/>
               </CarouselItem>
             ))}
           </CarouselContent>
