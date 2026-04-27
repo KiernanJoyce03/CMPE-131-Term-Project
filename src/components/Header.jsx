@@ -12,6 +12,7 @@ import {Label} from '@/components/ui/label'
 import { CiCloudMoon, CiCloudSun } from "react-icons/ci";
 
 import { useDispatch, useSelector } from 'react-redux'
+import { getUserStatus } from '../Redux/UserStatus/UserStatus'
 import { toggleDarkMode } from '../Redux/DarkMode/darkMode'
 
 
@@ -20,6 +21,7 @@ function Header() {
 
   const dispatch = useDispatch();
   const darkModeState = useSelector((state) => state.darkMode.isDarkMode);
+  const userStatus = useSelector((state) => state.userStatus);
 
 
   return (
@@ -64,6 +66,9 @@ function Header() {
               </DropdownMenuItem>
               <DropdownMenuItem className=' focus:bg-accent'>
                 <Link to='/profile/settings'>Settings</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className=' focus:bg-accent'>
+                {!userStatus.isLoggedIn ? <>Login / Sign-Up</> : <>Logout</>}
               </DropdownMenuItem>
                 <div className='flex px-1 py-2 items-center'>
                   <Switch checked ={darkModeState} onCheckedChange ={()=>{dispatch(toggleDarkMode())}} ></Switch>
