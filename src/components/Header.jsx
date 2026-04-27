@@ -23,12 +23,22 @@ function Header() {
 
 
   return (
-    <div className=" overflow-hidden border-b-2 border-border flex items-center justify-between bg-background">
-      <h1 className=" pl-2 text-foreground text-4xl ">
-        <Link to="/" className=' hover:text-muted-foreground'>
-        My Book Tracker </Link>
+    <div className="grid grid-cols-3 items-center px-10 py-4 border-b border-border/40 backdrop-blur-md bg-background/80 sticky top-0 z-50">
+      <h1 className="font-syne font-extrabold text-2xl tracking-tight">
+        <Link to="/" className="bg-linear-to-br from-white to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+          Shelf Picks
+        </Link>
       </h1>
-        <div className='pr-2 pt-2'>
+
+      <div className='flex items-center justify-center'>
+        <input
+          type='text'
+          placeholder='Search books...'
+          className='w-full max-w-sm bg-background/60 border border-border/110 rounded-full px-4 py-1.5 text-sm text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-accent/50 transition-colors'
+        />
+      </div>
+
+        <div className='justify-self-end pr-2'>
           <DropdownMenu> 
           <DropdownMenuTrigger asChild>
             <Button variant='ghost' size='icon' className='rounded-full hover:bg-transparent '>
