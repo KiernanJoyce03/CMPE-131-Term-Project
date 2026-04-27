@@ -17,7 +17,7 @@ const userStatusSlice = createSlice({
         logout: (state) => {
             state.isLoggedIn = false;
             state.isAdmin = false;
-            state.userInfo = null;
+            
         }
     }
 });
