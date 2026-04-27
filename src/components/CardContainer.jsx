@@ -1,10 +1,8 @@
 import React from 'react'
 
 function CardContainer({ book }) {
-  const thumbnail = book?.volumeInfo?.imageLinks?.thumbnail
-    ?.replace('http://', 'https://')
-    ?.replace('zoom=1', 'zoom=2')
-  const title = book?.volumeInfo?.title
+  const thumbnail = book?.coverUrl
+  const title = book?.title
 
   return (
     <div className='relative w-full aspect-2/3 rounded-lg overflow-hidden'>
