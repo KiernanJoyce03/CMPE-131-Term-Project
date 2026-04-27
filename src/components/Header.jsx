@@ -25,7 +25,7 @@ function Header() {
   return (
     <div className="grid grid-cols-3 items-center px-10 py-4 border-b border-border/40 backdrop-blur-md bg-background/80 sticky top-0 z-50">
       <h1 className="font-syne font-extrabold text-2xl tracking-tight">
-        <Link to="/" className="bg-linear-to-br from-white to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+        <Link to="/home" className="bg-linear-to-br from-white to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity">
           Shelf Picks
         </Link>
       </h1>
