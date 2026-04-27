@@ -13,9 +13,14 @@ const userStatusSlice = createSlice({
             state.isLoggedIn = action.payload.isLoggedIn;
             state.userInfo = action.payload.userInfo;
             state.isAdmin = action.payload.isAdmin;
+        },
+        logout: (state) => {
+            state.isLoggedIn = false;
+            state.isAdmin = false;
+            state.userInfo = null;
         }
     }
 });
 
-export const {getUserStatus} = userStatusSlice.actions;
+export const { getUserStatus, logout } = userStatusSlice.actions;
 export default userStatusSlice.reducer;
