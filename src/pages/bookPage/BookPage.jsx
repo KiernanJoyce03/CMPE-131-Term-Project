@@ -24,6 +24,9 @@ function BookPage() {
   const [loading, setLoading] = useState(true)
   const [loginOpen, setLoginOpen] = useState(false)
   const [signupOpen, setSignupOpen] = useState(false)
+  const [isOnShelf, setIsOnShelf] = useState(false)
+  const [addingToShelf, setAddingToShelf] = useState(false)
+  const [shelfError, setShelfError] = useState('')
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -40,6 +43,51 @@ function BookPage() {
     }
     fetchBookDetails()
   }, [id])
+
+  // Check if book is already on user's shelf
+  useEffect(() => {
+    if (!isLoggedIn) return
+    const checkShelf = async () => {
+      try {
+        const res = await fetch('/api/shelf', { credentials: 'include' })
+        const data = await res.json()
+        const found = data.data?.shelf?.some((entry) => entry.bookId === `/works/${id}` || entry.bookId === id)
+        setIsOnShelf(!!found)
+      } catch {
+        // silently ignore
+      }
+    }
+    checkShelf()
+  }, [isLoggedIn, id])
+
+  const handleAddToShelf = async () => {
+    setAddingToShelf(true)
+    setShelfError('')
+    try {
+      const res = await fetch('/api/shelf', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bookId: book.id,
+          title: book.title,
+          author: book.author,
+          coverUrl: book.coverUrl,
+          description: book.description,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setShelfError(data.error ?? 'Failed to add to shelf')
+        return
+      }
+      setIsOnShelf(true)
+    } catch {
+      setShelfError('Failed to add to shelf')
+    } finally {
+      setAddingToShelf(false)
+    }
+  }
 
   if (loading) return (
     <div className='px-10 py-12 flex gap-10'>
@@ -128,20 +176,27 @@ function BookPage() {
             )}
 
             {/* Auth actions */}
-            <div className='flex gap-3 pt-1'>
+            <div className='flex flex-col gap-2 pt-1'>
               {isLoggedIn ? (
-                <Button
-                  className='bg-accent hover:bg-accent/90 text-white rounded-full px-6 tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
-                  onClick={() => console.log('Add to shelf — coming soon')}
-                >
-                  + Add to Shelf
-                </Button>
+                isOnShelf ? (
+                  <div className='flex items-center gap-2'>
+                    <span className='bg-accent hover:bg-accent/90 text-white rounded-full px-6 py-2 w-fit tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
+                    >✎ Edit</span>
+                  </div>
+                ) : (
+                  <Button
+                    className='bg-accent hover:bg-accent/90 text-white rounded-full px-6 w-fit tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
+                    onClick={handleAddToShelf}
+                    disabled={addingToShelf}
+                  >
+                    {addingToShelf ? 'Adding…' : '+ Add to Shelf'}
+                  </Button>
+                )
               ) : (
                 <div className='flex flex-col gap-2'>
                   <p className='text-xs text-foreground/40 font-dm-sans uppercase tracking-widest'>
                     Sign in to log, rate or review
                   </p>
-                  {/* Combined split button */}
                   <div className='flex items-stretch rounded-full border border-white/10 overflow-hidden w-fit'>
                     <button
                       onClick={() => setLoginOpen(true)}
@@ -158,6 +213,9 @@ function BookPage() {
                     </button>
                   </div>
                 </div>
+              )}
+              {shelfError && (
+                <p className='text-xs text-destructive font-dm-sans'>{shelfError}</p>
               )}
             </div>
           </div>
