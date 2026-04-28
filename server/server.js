@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bookRoutes from './routes/booksRoute.js';
 import authRoutes from './routes/authRoute.js';
+import shelfRoutes from './routes/shelfRoute.js';
 import { connectDB, disconnectDB } from './config/db.js';
 
 await connectDB();
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/shelf', shelfRoutes);
 
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
