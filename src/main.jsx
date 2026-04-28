@@ -1,6 +1,7 @@
 import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setUserStatus } from './Redux/UserStatus/UserStatus'
 import ErrorPage from './pages/ErrorPage.jsx'
 
 import './index.css'
@@ -27,6 +28,25 @@ function ThemeSync() {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkModeState)
   }, [darkModeState])
+  return null
+}
+
+function AuthSync() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/auth/me', { credentials: 'include' })
+        if (res.ok) {
+          const data = await res.json()
+          dispatch(setUserStatus({ isLoggedIn: true, userInfo: data.data.user, isAdmin: false }))
+        }
+      } catch {
+        // no valid cookie, stay logged out
+      }
+    }
+    checkAuth()
+  }, [dispatch])
   return null
 }
 
@@ -78,6 +98,7 @@ createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ThemeSync />
+      <AuthSync />
       <StrictMode>
         <RouterProvider router={router} />
       </StrictMode>
