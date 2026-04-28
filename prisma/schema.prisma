@@ -34,9 +34,14 @@ model Watchlist {
   userId    String
   bookId    String
   status    WatchlistStatus @default(WANT_TO_READ)
-  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  book      Book            @relation(fields: [bookId], references: [id])
+  rating    Int?            // 1–5, null if not rated yet
+  review    String?         // optional text review
+  startedAt DateTime?       // when the user started reading
+  finishedAt DateTime?      // when the user finished
   addedAt   DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book      Book            @relation(fields: [bookId], references: [id], onDelete: Cascade)
 
   @@unique([userId, bookId]) // a user can only add a book once
 }
