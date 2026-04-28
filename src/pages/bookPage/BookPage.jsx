@@ -241,7 +241,7 @@ function BookPage() {
       </div>
       <LoginPopup open={loginOpen} onOpenChange={setLoginOpen} />
       <SignupPopup open={signupOpen} onOpenChange={setSignupOpen} />
-      <EditBookPopup open={editOpen} onOpenChange={setEditOpen} book={book} />
+      <EditBookPopup open={editOpen} onOpenChange={setEditOpen} book={book} onDeleted={() => setIsOnShelf(false)} />
     </div>
   )
 }

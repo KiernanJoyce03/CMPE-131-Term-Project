@@ -10,7 +10,10 @@ const STATUSES = [
   { value: 'DROPPED',      label: 'Dropped' },
 ]
 
-function EditBookPopup({ open, onOpenChange, book }) {
+// Strip /works/ prefix so it's safe to put in a URL path
+const toUrlId = (id) => id?.replace('/works/', '') ?? id
+
+function EditBookPopup({ open, onOpenChange, book, onDeleted }) {
   const [status, setStatus] = useState('WANT_TO_READ')
   const [rating, setRating] = useState(null)
   const [review, setReview] = useState('')
@@ -42,7 +45,7 @@ function EditBookPopup({ open, onOpenChange, book }) {
     setError('')
     setLoading(true)
     try {
-      const res = await fetch(`/api/shelf/${book.id}`, {
+      const res = await fetch(`/api/shelf/${toUrlId(book.id)}`, {
         method: 'PATCH',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -60,24 +63,24 @@ function EditBookPopup({ open, onOpenChange, book }) {
       setLoading(false)
     }
   }
-  const onDelete = async (e) => {
-    e.preventDefault()
+
+  const onDelete = async () => {
     setError('')
     setLoading(true)
     try {
-      const res = await fetch(`/api/shelf/${book.id}`, {
+      const res = await fetch(`/api/shelf/${toUrlId(book.id)}`, {
         method: 'DELETE',
         credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
       })
       const data = await res.json()
       if (!res.ok) {
-        setError(data.error ?? 'Failed to update shelf entry')
+        setError(data.error ?? 'Failed to remove book')
         return
       }
       onOpenChange(false)
+      onDeleted?.()
     } catch {
-      setError('Failed to update shelf entry')
+      setError('Failed to remove book')
     } finally {
       setLoading(false)
     }
@@ -158,22 +161,23 @@ function EditBookPopup({ open, onOpenChange, book }) {
 
           {error && <p className='text-sm text-destructive'>{error}</p>}
 
-          <Button
-            type='submit'
-            disabled={loading}
-            onSubmit={onSubmit}
-            className='w-full bg-accent hover:bg-accent/90 text-white rounded-full tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
-          >
-            {loading ? 'Saving…' : 'Save →'}
-          </Button>
-          <Button
-            type='submit'
-            disabled={loading}
-            onSubmit={onDelete}
-            className='w-full bg-accent hover:bg-accent/90 text-white rounded-full tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
-          >
-            {loading ? 'Deleting…' : 'Delete →'}
-          </Button>
+          <div className='flex gap-2'>
+            <Button
+              type='submit'
+              disabled={loading}
+              className='flex-1 bg-accent hover:bg-accent/90 text-white rounded-full tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
+            >
+              {loading ? 'Saving…' : 'Save →'}
+            </Button>
+            <Button
+              type='button'
+              disabled={loading}
+              onClick={onDelete}
+              className='flex-1 bg-destructive/80 hover:bg-destructive text-white rounded-full tracking-wide transition-all duration-200'
+            >
+              {loading ? 'Removing…' : 'Remove'}
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

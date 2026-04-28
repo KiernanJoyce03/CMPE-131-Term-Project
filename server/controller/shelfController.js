@@ -42,11 +42,15 @@ const addBookToShelf = async (req, res) => {
   }
 };
 
+// Normalise bookId — URL param strips the /works/ prefix, put it back
+const normaliseBookId = (raw) =>
+  raw.startsWith('/works/') ? raw : `/works/${raw}`
+
 // DELETE /api/shelf/:bookId  — remove a book from the user's shelf
 const removeBookFromShelf = async (req, res) => {
   try {
     const userId = req.userId;
-    const { bookId } = req.params;
+    const bookId = normaliseBookId(req.params.bookId);
 
     await prisma.watchlist.delete({
       where: { userId_bookId: { userId, bookId } },
@@ -63,7 +67,7 @@ const removeBookFromShelf = async (req, res) => {
 const updateShelfEntry = async (req, res) => {
   try {
     const userId = req.userId;
-    const { bookId } = req.params;
+    const bookId = normaliseBookId(req.params.bookId);
     const { status, rating, review, startedAt, finishedAt } = req.body;
 
     const entry = await prisma.watchlist.update({
