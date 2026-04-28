@@ -15,6 +15,8 @@ import Settings from './pages/ProfileSettings/Settings.jsx'
 import Books from './pages/ProfileSettings/Books.jsx'
 import LandingLayout from './Layouts/LandingLayout.jsx'
 import LandingPage from './pages/LandingPage/LandingPage.jsx'
+import SearchResultPage from './pages/searchResultPage/searchResultPage.jsx'
+import BookPage from './pages/bookPage/BookPage.jsx'
 import { store, persistor } from './Redux/Store.js'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -36,7 +38,7 @@ const router = createBrowserRouter([
     children:[{
       path:'',
       element:<LandingPage/>
-    },]
+    }]
   },
   {
     path:'home',
@@ -45,7 +47,14 @@ const router = createBrowserRouter([
     children:[{
       path:'',
       element:<MainContent/>
-    },]
+    },
+  {
+      path:'search',
+      element:<SearchResultPage/>
+    },{
+      path:'book/:id',
+      element:<BookPage/>
+    }]
   },
   {
     path:'profile',
