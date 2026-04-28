@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../src/generated/prisma/index.js";
 
 /**
  * 404 Not Found handler
