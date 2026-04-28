@@ -8,7 +8,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { CiCloudMoon, CiCloudSun } from 'react-icons/ci'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import tempPhoto from '../assets/person-icon.jpg'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,6 +23,7 @@ function Header() {
   const darkModeState = useSelector((state) => state.darkMode.isDarkMode)
   const isLoggedIn = useSelector((state) => state.userStatus.isLoggedIn)
 
+  const navigate = useNavigate()
   const [loginOpen, setLoginOpen] = React.useState(false)
   const [signupOpen, setSignupOpen] = React.useState(false)
   const [search, setSearch] = React.useState('')
@@ -44,10 +45,10 @@ function Header() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && search.trim() !== "") {
-                navigate(`/search?q=${encodeURIComponent(search)}`)
+              if (e.key === 'Enter' && search.trim() !== '') {
+                navigate(`/home/search?q=${encodeURIComponent(search)}`)
               }
-            }    
+            }}
           />
         </div>
 
