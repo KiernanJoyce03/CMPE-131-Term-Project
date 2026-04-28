@@ -25,6 +25,7 @@ function Header() {
 
   const [loginOpen, setLoginOpen] = React.useState(false)
   const [signupOpen, setSignupOpen] = React.useState(false)
+  const [search, setSearch] = React.useState('')
 
   return (
     <>
@@ -40,6 +41,13 @@ function Header() {
             type='text'
             placeholder='Search books...'
             className='w-full max-w-sm bg-background/60 border border-border/110 rounded-full px-4 py-1.5 text-sm text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-accent/50 transition-colors'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && search.trim() !== "") {
+                navigate(`/search?q=${encodeURIComponent(search)}`)
+              }
+            }    
           />
         </div>
 

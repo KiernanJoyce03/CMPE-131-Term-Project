@@ -69,7 +69,7 @@ const router = createBrowserRouter([
       element:<MainContent/>
     },
   {
-      path:'search',
+      path:'search?q=${search}',
       element:<SearchResultPage/>
     },{
       path:'book/:id',
