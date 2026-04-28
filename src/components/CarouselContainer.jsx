@@ -13,7 +13,7 @@ import Autoplay from "embla-carousel-autoplay"
 
 function CarouselContainer({bookArray}) {
 
-const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
+const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true, stopOnMouseEnter: true }))
   return (
     <div className='relative h-70 w-[95%] mx-auto'>
           <Carousel opts={{
