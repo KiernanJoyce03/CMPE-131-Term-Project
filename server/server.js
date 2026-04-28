@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import bookRoutes from './routes/booksRoute.js';
 import authRoutes from './routes/authRoute.js';
 import shelfRoutes from './routes/shelfRoute.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import { connectDB, disconnectDB } from './config/db.js';
 
 await connectDB();
@@ -20,6 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/shelf', shelfRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
