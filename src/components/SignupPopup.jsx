@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -8,27 +8,37 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useState } from 'react'
 
 function SignupPopup({ open, onOpenChange }) {
-    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = async (e) => {
+        e.preventDefault()
+        setError('')
+        setLoading(true)
         try {
-            const res = await fetch("/api/auth/signup", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, password }),
+            const res = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
             })
             const data = await res.json()
-            console.log("Signup response:", data)
+            if (!res.ok) {
+                setError(data.error || 'Registration failed')
+                return
+            }
+            console.log('Registered:', data)
+            onOpenChange(false) // close dialog on success
         } catch (err) {
-            console.error("Failed to signup:", err)
+            setError('Something went wrong. Try again.')
+            console.error('Failed to signup:', err)
+        } finally {
+            setLoading(false)
         }
     }
-
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -46,19 +56,7 @@ function SignupPopup({ open, onOpenChange }) {
                     </p>
                 </DialogHeader>
 
-                <div className='flex flex-col gap-4 pt-1'>
-                    <div className='flex flex-col gap-1.5'>
-                        <Label htmlFor='signup-name' className='text-foreground/70 text-xs uppercase tracking-widest font-medium'>
-                            Name
-                        </Label>
-                        <Input
-                            id='signup-name'
-                            type='text'
-                            placeholder='Your name'
-                            className='bg-background/60 border-white/10 placeholder:text-foreground/30 focus-visible:ring-accent/40 focus-visible:border-accent/50'
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
+                <form onSubmit={onSubmit} className='flex flex-col gap-4 pt-1'>
                     <div className='flex flex-col gap-1.5'>
                         <Label htmlFor='signup-email' className='text-foreground/70 text-xs uppercase tracking-widest font-medium'>
                             Email
@@ -82,16 +80,18 @@ function SignupPopup({ open, onOpenChange }) {
                             className='bg-background/60 border-white/10 placeholder:text-foreground/30 focus-visible:ring-accent/40 focus-visible:border-accent/50'
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        />
                     </div>
+                    {error && (
+                        <p className='text-sm text-destructive'>{error}</p>
+                    )}
                     <Button
                         type='submit'
+                        disabled={loading}
                         className='w-full bg-accent hover:bg-accent/90 text-white rounded-full tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
-                        onClick={onSubmit}                   
-                   >
-                        Create account →
+                    >
+                        {loading ? 'Creating account...' : 'Create account →'}
                     </Button>
-                </div>
+                </form>
             </DialogContent>
         </Dialog>
     )
