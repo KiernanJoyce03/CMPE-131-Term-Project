@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import LoginPopup from '../../components/LoginPopup'
 import SignupPopup from '../../components/SignupPopup'
+import EditBookPopup from '../../components/editBookPopup'
 
 function StarRating({ rating }) {
   const stars = Math.round((rating / 5) * 5)
@@ -26,7 +27,9 @@ function BookPage() {
   const [signupOpen, setSignupOpen] = useState(false)
   const [isOnShelf, setIsOnShelf] = useState(false)
   const [addingToShelf, setAddingToShelf] = useState(false)
+  const [editOpen, setEditOpen] = useState(false)
   const [shelfError, setShelfError] = useState('')
+
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -180,7 +183,7 @@ function BookPage() {
               {isLoggedIn ? (
                 isOnShelf ? (
                   <div className='flex items-center gap-2'>
-                    <span className='bg-accent hover:bg-accent/90 text-white rounded-full px-6 py-2 w-fit tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
+                    <span onClick={() => setEditOpen(true)} className='bg-accent hover:bg-accent/90 text-white rounded-full px-6 py-2 w-fit tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
                     >✎ Edit</span>
                   </div>
                 ) : (
@@ -238,6 +241,7 @@ function BookPage() {
       </div>
       <LoginPopup open={loginOpen} onOpenChange={setLoginOpen} />
       <SignupPopup open={signupOpen} onOpenChange={setSignupOpen} />
+      <EditBookPopup open={editOpen} onOpenChange={setEditOpen} book={book} />
     </div>
   )
 }
