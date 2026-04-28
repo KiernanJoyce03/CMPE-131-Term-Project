@@ -9,7 +9,7 @@ const userStatusSlice = createSlice({
     name: "userStatus",
     initialState: initialState,
     reducers:{
-        getUserStatus: (state, action) => {
+        setUserStatus: (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn;
             state.userInfo = action.payload.userInfo;
             state.isAdmin = action.payload.isAdmin;
@@ -22,5 +22,5 @@ const userStatusSlice = createSlice({
     }
 });
 
-export const { getUserStatus, logout } = userStatusSlice.actions;
+export const { setUserStatus, logout } = userStatusSlice.actions;
 export default userStatusSlice.reducer;

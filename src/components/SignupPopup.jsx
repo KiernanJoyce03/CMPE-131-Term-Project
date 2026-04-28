@@ -8,8 +8,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useDispatch } from 'react-redux'
+import { setUserStatus } from '../Redux/UserStatus/UserStatus'
 
 function SignupPopup({ open, onOpenChange }) {
+    const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -30,7 +33,11 @@ function SignupPopup({ open, onOpenChange }) {
                 setError(data.error || 'Registration failed')
                 return
             }
-            console.log('Registered:', data)
+            dispatch(setUserStatus({
+                isLoggedIn: true,
+                userInfo: data.data.user,
+                isAdmin: false,
+            }))
             onOpenChange(false) // close dialog on success
         } catch (err) {
             setError('Something went wrong. Try again.')

@@ -8,8 +8,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useDispatch } from 'react-redux'
+import { setUserStatus } from '../Redux/UserStatus/UserStatus'
 
 function LoginPopup({ open, onOpenChange }) {
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -30,7 +33,11 @@ function LoginPopup({ open, onOpenChange }) {
         setError(data.error || 'Login failed')
         return
       }
-      console.log('Logged in:', data)
+      dispatch(setUserStatus({
+        isLoggedIn: true,
+        userInfo: data.data.user,
+        isAdmin: false,
+      }))
       onOpenChange(false)
     } catch (err) {
       setError('Something went wrong. Try again.')
