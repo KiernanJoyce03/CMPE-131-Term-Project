@@ -18,6 +18,7 @@ import LandingLayout from './Layouts/LandingLayout.jsx'
 import LandingPage from './pages/LandingPage/LandingPage.jsx'
 import SearchResultPage from './pages/searchResultPage/searchResultPage.jsx'
 import BookPage from './pages/bookPage/BookPage.jsx'
+import ShelfPage from './pages/shelfPage/ShelfPage.jsx'
 import { store, persistor } from './Redux/Store.js'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -74,6 +75,9 @@ const router = createBrowserRouter([
     },{
       path:'book/:id',
       element:<BookPage/>
+    },{
+      path:'shelf/:username',
+      element:<ShelfPage/>
     }]
   },
   {

@@ -37,7 +37,7 @@ function Header() {
           </Link>
         </h1>
 
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-start pl-8'>
           <input
             type='text'
             placeholder='Search books...'
@@ -51,8 +51,10 @@ function Header() {
             }}
           />
         </div>
-
-        <div className='justify-self-end pr-2'>
+        <div className='justify-self-end pr-2 flex items-center gap-6'>
+          <Link to='/home/shelf' className='text-sm text-foreground/50 hover:text-foreground transition-colors tracking-wide'>
+            Shelf
+          </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='ghost' size='icon' className='rounded-full hover:bg-transparent'>
