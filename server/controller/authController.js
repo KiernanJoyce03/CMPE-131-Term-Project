@@ -20,10 +20,6 @@ const register = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
-    }
-
     const userExists = await prisma.user.findUnique({ where: { email } });
     if (userExists) {
       return res.status(400).json({ error: "User already exists with this email" });
@@ -54,11 +50,8 @@ const register = async (req, res) => {
 
 const updateUsername = async (req, res) => {
   try {
-    const { userId, username } = req.body;
-
-    if (!username) {
-      return res.status(400).json({ error: "Username is required" });
-    }
+    const { username } = req.body;
+    const userId = req.userId;
 
     const taken = await prisma.user.findUnique({ where: { username } });
     if (taken) {
@@ -83,10 +76,6 @@ const updateUsername = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
-    }
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
