@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import LoginPopup from '../../components/LoginPopup'
+import SignupPopup from '../../components/SignupPopup'
 
 function StarRating({ rating }) {
   const stars = Math.round((rating / 5) * 5)
@@ -20,6 +22,8 @@ function BookPage() {
   const isLoggedIn = useSelector((state) => state.userStatus.isLoggedIn)
   const [book, setBook] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [loginOpen, setLoginOpen] = useState(false)
+  const [signupOpen, setSignupOpen] = useState(false)
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -137,13 +141,21 @@ function BookPage() {
                   <p className='text-xs text-foreground/40 font-dm-sans uppercase tracking-widest'>
                     Sign in to log, rate or review
                   </p>
-                  <div className='flex gap-2'>
-                    <Button variant='outline' className='rounded-full text-sm border-white/10 hover:border-accent/50'>
-                      Sign in
-                    </Button>
-                    <Button variant='ghost' className='rounded-full text-sm text-foreground/40'>
-                      Share
-                    </Button>
+                  {/* Combined split button */}
+                  <div className='flex items-stretch rounded-full border border-white/10 overflow-hidden w-fit'>
+                    <button
+                      onClick={() => setLoginOpen(true)}
+                      className='px-5 py-1.5 text-sm text-foreground/70 hover:bg-accent/10 hover:text-foreground transition-colors duration-150'
+                    >
+                      Log in
+                    </button>
+                    <div className='w-px bg-white/10' />
+                    <button
+                      onClick={() => setSignupOpen(true)}
+                      className='px-5 py-1.5 text-sm text-foreground/70 hover:bg-accent/10 hover:text-foreground transition-colors duration-150'
+                    >
+                      Sign up
+                    </button>
                   </div>
                 </div>
               )}
@@ -166,6 +178,8 @@ function BookPage() {
         </div>
 
       </div>
+      <LoginPopup open={loginOpen} onOpenChange={setLoginOpen} />
+      <SignupPopup open={signupOpen} onOpenChange={setSignupOpen} />
     </div>
   )
 }
