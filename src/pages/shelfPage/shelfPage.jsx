@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Skeleton } from '@/components/ui/skeleton'
+import BookGrid from '../../components/BookGrid'
 
 const STATUS_LABELS = {
   WANT_TO_READ: 'Want to Read',
@@ -86,49 +87,15 @@ function ShelfPage() {
           <p className='text-sm text-foreground/30 font-dm-sans'>Add books from any book page</p>
         </div>
       ) : (
-        <div className='grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-8'>
-          {filtered.map((entry) => (
-            <div
-              key={entry.id}
-              className='flex flex-col gap-2 cursor-pointer group'
-              onClick={() => navigate(`/home/book/${entry.bookId.replace('/works/', '')}`)}
-            >
-              {/* Cover */}
-              <div className='w-full aspect-2/3 rounded-lg overflow-hidden bg-accent/10 relative'>
-                {entry.book.coverUrl ? (
-                  <img
-                    src={entry.book.coverUrl}
-                    alt={entry.book.title}
-                    className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
-                  />
-                ) : (
-                  <div className='w-full h-full flex items-center justify-center text-foreground/20 text-xs text-center px-2'>
-                    No cover
-                  </div>
-                )}
-                {/* Status badge */}
-                <span className='absolute bottom-1.5 left-1.5 text-[0.6rem] uppercase tracking-widest bg-black/60 text-white px-2 py-0.5 rounded-full'>
-                  {STATUS_LABELS[entry.status]}
-                </span>
-              </div>
-
-              {/* Info */}
-              <div className='px-0.5'>
-                <p className='text-xs font-semibold text-foreground/80 truncate leading-tight'>
-                  {entry.book.title}
-                </p>
-                <p className='text-xs text-foreground/40 truncate font-dm-sans'>
-                  {entry.book.author}
-                </p>
-                {entry.rating && (
-                  <p className='text-xs text-accent mt-0.5'>
-                    {'★'.repeat(entry.rating)}{'☆'.repeat(5 - entry.rating)}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        <BookGrid
+          books={filtered.map((entry) => ({
+            id: entry.bookId,
+            title: entry.book.title,
+            author: entry.book.author,
+            coverUrl: entry.book.coverUrl,
+          }))}
+          onBookClick={(book) => navigate(`/home/book/${book.id.replace('/works/', '')}`)}
+        />
       )}
     </div>
   )
