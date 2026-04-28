@@ -92,4 +92,36 @@ const getTrending = async (req, res) => {
   }
 };
 
-export { searchBooks, getBooksBySubject, getTrending };
+// GET /api/books/work/:id  (id = OL45804W, without the /works/ prefix)
+const getBookById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [workRes, ratingsRes] = await Promise.all([
+      fetch(`https://openlibrary.org/works/${id}.json`),
+      fetch(`https://openlibrary.org/works/${id}/ratings.json`),
+    ]);
+    const work = await workRes.json();
+    const ratings = await ratingsRes.json();
+
+    const coverId = work.covers?.[0];
+
+    res.json({
+      id: `/works/${id}`,
+      title: work.title,
+      description: typeof work.description === 'string'
+        ? work.description
+        : work.description?.value ?? null,
+      coverUrl: coverId
+        ? `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`
+        : null,
+      subjects: work.subjects?.slice(0, 10) ?? [],
+      rating: ratings.summary?.average ?? null,
+      ratingCount: ratings.summary?.count ?? 0,
+    });
+  } catch (error) {
+    console.error('getBookById error:', error);
+    res.status(500).json({ error: 'Failed to fetch book' });
+  }
+};
+
+export { searchBooks, getBooksBySubject, getTrending, getBookById };
