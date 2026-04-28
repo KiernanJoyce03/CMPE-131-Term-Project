@@ -22,6 +22,7 @@ function Header() {
   const dispatch = useDispatch()
   const darkModeState = useSelector((state) => state.darkMode.isDarkMode)
   const isLoggedIn = useSelector((state) => state.userStatus.isLoggedIn)
+  const username = useSelector((state) => state.userStatus.userInfo?.username)
 
   const navigate = useNavigate()
   const [loginOpen, setLoginOpen] = React.useState(false)
@@ -52,9 +53,11 @@ function Header() {
           />
         </div>
         <div className='justify-self-end pr-2 flex items-center gap-6'>
-          <Link to='/home/shelf' className='text-sm text-foreground/50 hover:text-foreground transition-colors tracking-wide'>
-            Shelf
-          </Link>
+          {isLoggedIn && username && (
+            <Link to={`/home/shelf/${username}`} className='text-sm text-foreground/50 hover:text-foreground transition-colors tracking-wide'>
+              Shelf
+            </Link>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='ghost' size='icon' className='rounded-full hover:bg-transparent'>
