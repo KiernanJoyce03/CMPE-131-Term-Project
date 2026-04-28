@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,36 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 function LoginPopup({ open, onOpenChange }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setError(data.error || 'Login failed')
+        return
+      }
+      console.log('Logged in:', data)
+      onOpenChange(false)
+    } catch (err) {
+      setError('Something went wrong. Try again.')
+      console.error('Failed to login:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='sm:max-w-sm border border-white/[0.07] bg-background/95 backdrop-blur-md'>
@@ -26,7 +56,7 @@ function LoginPopup({ open, onOpenChange }) {
           </p>
         </DialogHeader>
 
-        <div className='flex flex-col gap-4 pt-1'>
+        <form onSubmit={onSubmit} className='flex flex-col gap-4 pt-1'>
           <div className='flex flex-col gap-1.5'>
             <Label htmlFor='email' className='text-foreground/70 text-xs uppercase tracking-widest font-medium'>
               Email
@@ -36,6 +66,7 @@ function LoginPopup({ open, onOpenChange }) {
               type='email'
               placeholder='you@example.com'
               className='bg-background/60 border-white/10 placeholder:text-foreground/30 focus-visible:ring-accent/40 focus-visible:border-accent/50'
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className='flex flex-col gap-1.5'>
@@ -47,15 +78,20 @@ function LoginPopup({ open, onOpenChange }) {
               type='password'
               placeholder='••••••••'
               className='bg-background/60 border-white/10 placeholder:text-foreground/30 focus-visible:ring-accent/40 focus-visible:border-accent/50'
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {error && (
+            <p className='text-sm text-destructive'>{error}</p>
+          )}
           <Button
             type='submit'
+            disabled={loading}
             className='w-full bg-accent hover:bg-accent/90 text-white rounded-full tracking-wide hover:-translate-y-px hover:shadow-[0_4px_20px_#6c63ff44] transition-all duration-200'
           >
-            Log in →
+            {loading ? 'Logging in...' : 'Log in →'}
           </Button>
-        </div>
+        </form>
       </DialogContent>
     </Dialog>
   )
