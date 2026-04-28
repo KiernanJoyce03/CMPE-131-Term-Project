@@ -1,0 +1,334 @@
+.book-scene {
+  perspective: 1100px;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.book-shell {
+  width: 148px;
+  height: 212px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-32deg) translateY(0px);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.book-scene:hover .book-shell {
+  transform: rotateY(-6deg) translateY(-7px);
+}
+
+.book-back {
+  position: absolute;
+  width: 148px;
+  height: 212px;
+  border-radius: 1px 5px 5px 1px;
+  transform: translateZ(-16px);
+  backface-visibility: hidden;
+}
+
+.book-spine {
+  position: absolute;
+  width: 32px;
+  height: 212px;
+  left: 0;
+  top: 0;
+  transform: rotateY(-90deg) translateX(-16px);
+  transform-origin: left center;
+  border-radius: 3px 0 0 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.book-spine::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 4px; height: 100%;
+  background: rgba(255,255,255,0.18);
+}
+.book-spine::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0;
+  width: 3px; height: 100%;
+  background: rgba(0,0,0,0.18);
+}
+
+.spine-texture {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px, rgba(0,0,0,0) 3px,
+    rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px
+  );
+}
+
+.spine-title {
+  position: relative;
+  z-index: 1;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 190px;
+  padding: 0 6px;
+}
+
+.book-top {
+  position: absolute;
+  width: 148px;
+  height: 32px;
+  top: 0; left: 0;
+  transform: rotateX(90deg) translateZ(-16px);
+  transform-origin: top center;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0, transparent 1.4px,
+    rgba(0,0,0,0.05) 1.4px, rgba(0,0,0,0.05) 2px
+  );
+}
+.book-bottom {
+  position: absolute;
+  width: 148px;
+  height: 32px;
+  bottom: 0; left: 0;
+  transform: rotateX(-90deg) translateZ(-16px);
+  transform-origin: bottom center;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0, transparent 1.4px,
+    rgba(0,0,0,0.05) 1.4px, rgba(0,0,0,0.05) 2px
+  );
+}
+
+.spine-front {
+  position: absolute;
+  left: 0; top: 0;
+  width: 9px;
+  height: 212px;
+  transform: translateZ(12px);
+  backface-visibility: hidden;
+  border-radius: 2px 0 0 2px;
+}
+.spine-front::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.18), transparent);
+}
+
+.inner-spread {
+  position: absolute;
+  width: 148px;
+  height: 212px;
+  transform: translateZ(12px);
+  border-radius: 1px 5px 5px 1px;
+  overflow: hidden;
+  display: flex;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.28s;
+}
+.book-scene:hover .inner-spread {
+  clip-path: inset(0 0% 0 0);
+}
+
+.spread-left {
+  width: 50%;
+  height: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: linear-gradient(to right, #e5e0d2, #eeead8);
+}
+.spread-right {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(to left, #f5f2ea, #eeead8);
+}
+.spread-left svg,
+.spread-right svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.spread-fold {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(to right,
+    rgba(0,0,0,0.13) 0%,
+    rgba(0,0,0,0.02) 40%,
+    rgba(0,0,0,0.02) 60%,
+    rgba(0,0,0,0.13) 100%
+  );
+  pointer-events: none;
+}
+.spread-top-shade {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 9px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.07), transparent);
+  pointer-events: none;
+}
+.spread-bottom-shade {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 9px;
+  background: linear-gradient(to top, rgba(0,0,0,0.07), transparent);
+  pointer-events: none;
+}
+
+.cover-wrap {
+  position: absolute;
+  left: 7px; top: 0;
+  width: 141px;
+  height: 212px;
+  transform-origin: -7px 50%;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform 0.7s cubic-bezier(0.34, 1.06, 0.64, 1);
+}
+.book-scene:hover .cover-wrap {
+  transform: rotateY(-168deg);
+}
+
+.book-face {
+  position: absolute;
+  width: 141px;
+  height: 212px;
+  border-radius: 0 5px 5px 0;
+  overflow: hidden;
+  transform: translateZ(16px);
+  backface-visibility: hidden;
+}
+.book-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.book-face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    130deg,
+    rgba(255,255,255,0.16) 0%,
+    rgba(255,255,255,0.04) 38%,
+    rgba(0,0,0,0.03) 65%,
+    rgba(0,0,0,0.12) 100%
+  );
+  pointer-events: none;
+}
+
+.cover-hinge {
+  position: absolute;
+  left: -7px; top: 0;
+  width: 7px;
+  height: 212px;
+  transform: translateZ(16px);
+  backface-visibility: hidden;
+  border-radius: 2px 0 0 2px;
+}
+.cover-hinge::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 2px; height: 100%;
+  background: rgba(255,255,255,0.15);
+}
+.cover-hinge::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0;
+  width: 3px; height: 100%;
+  background: rgba(0,0,0,0.2);
+}
+
+.cover-edge-right {
+  position: absolute;
+  width: 16px;
+  height: 212px;
+  right: 0; top: 0;
+  transform-origin: right center;
+  transform: rotateY(90deg);
+  backface-visibility: hidden;
+}
+
+.cover-inside {
+  position: absolute;
+  width: 141px;
+  height: 212px;
+  border-radius: 5px 0 0 5px;
+  overflow: hidden;
+  transform: translateZ(16px) rotateY(180deg);
+  backface-visibility: hidden;
+}
+.cover-inside svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.book-shadow {
+  width: 115px;
+  height: 18px;
+  margin: 5px auto 0;
+  background: rgba(0,0,0,0.2);
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0;
+  transform: scaleX(0.7);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.book-scene:hover .book-shadow {
+  opacity: 1;
+  transform: scaleX(1.08);
+}
+
+.book-label {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-align: center;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.book-author-label {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #888;
+  text-align: center;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.open-hint {
+  font-size: 10px;
+  color: transparent;
+  text-align: center;
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+  transition: color 0.2s ease 0.4s;
+}
+.book-scene:hover .open-hint {
+  color: #bbb;
+}

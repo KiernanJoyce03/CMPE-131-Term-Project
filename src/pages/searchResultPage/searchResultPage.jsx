@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import CardContainer from '../../components/CardContainer'
+import { useSearchParams, useNavigate } from 'react-router-dom'
+import BookGrid from '../../components/BookGrid'
 import { Skeleton } from '@/components/ui/skeleton'
 
 function SearchResultPage() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -56,33 +57,23 @@ function SearchResultPage() {
       )}
 
       {/* Grid */}
-      <div className='grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-8'>
-        {loading
-          ? Array.from({ length: 18 }).map((_, i) => (
-              <Skeleton key={i} className='w-full aspect-2/3 rounded-lg' />
-            ))
-          : results.length === 0
-            ? (
-              <div className='col-span-6 flex flex-col items-center py-20 gap-3'>
-                <p className='font-syne text-xl font-bold text-foreground/30'>No results found</p>
-                <p className='text-sm text-foreground/30 font-dm-sans'>Try a different search term</p>
-              </div>
-            )
-            : results.map((book) => (
-                <div key={book.id} className='flex flex-col gap-2'>
-                  <CardContainer book={book} />
-                  <div className='px-0.5'>
-                    <p className='text-xs font-semibold text-foreground/80 truncate leading-tight'>
-                      {book.title}
-                    </p>
-                    <p className='text-xs text-foreground/40 truncate font-dm-sans'>
-                      {book.author}
-                    </p>
-                  </div>
-                </div>
-              ))
-        }
-      </div>
+      {loading ? (
+        <div className='grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-8'>
+          {Array.from({ length: 18 }).map((_, i) => (
+            <Skeleton key={i} className='w-full aspect-2/3 rounded-lg' />
+          ))}
+        </div>
+      ) : results.length === 0 ? (
+        <div className='flex flex-col items-center py-20 gap-3'>
+          <p className='font-syne text-xl font-bold text-foreground/30'>No results found</p>
+          <p className='text-sm text-foreground/30 font-dm-sans'>Try a different search term</p>
+        </div>
+      ) : (
+        <BookGrid
+          books={results}
+          onBookClick={(book) => navigate(`/home/book/${book.id.replace('/works/', '')}`)}
+        />
+      )}
     </div>
   )
 }
