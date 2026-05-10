@@ -71,7 +71,7 @@ function SearchResultPage() {
       ) : (
         <BookGrid
           books={results}
-          onBookClick={(book) => navigate(`/home/book/${book.id.replace('/works/', '')}`)}
+          onBookClick={(book) => navigate(`/home/book/${book.id.replace('/works/', '')}`, { state: { author: book.author } })}
         />
       )}
     </div>

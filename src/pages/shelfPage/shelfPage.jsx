@@ -94,7 +94,7 @@ function ShelfPage() {
             author: entry.book.author,
             coverUrl: entry.book.coverUrl,
           }))}
-          onBookClick={(book) => navigate(`/home/book/${book.id.replace('/works/', '')}`)}
+          onBookClick={(book) => navigate(`/home/book/${book.id.replace('/works/', '')}`, { state: { author: book.author } })}
         />
       )}
     </div>

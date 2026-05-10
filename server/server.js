@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import bookRoutes from './routes/booksRoute.js';
 import authRoutes from './routes/authRoute.js';
 import shelfRoutes from './routes/shelfRoute.js';
@@ -10,10 +12,15 @@ import { connectDB, disconnectDB } from './config/db.js';
 
 await connectDB();
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+const allowedOrigins = process.env.CLIENT_URL
+  ? [process.env.CLIENT_URL]
+  : ['http://localhost:5173'];
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -22,8 +29,17 @@ app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/shelf', shelfRoutes);
 
-app.use(notFound);
-app.use(errorHandler);
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  const distPath = path.join(__dirname, '../dist');
+  app.use(express.static(distPath));
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+} else {
+  app.use(notFound);
+  app.use(errorHandler);
+}
 
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

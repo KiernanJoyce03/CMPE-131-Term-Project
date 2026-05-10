@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -20,6 +20,7 @@ function StarRating({ rating }) {
 
 function BookPage() {
   const { id } = useParams()
+  const { state } = useLocation()
   const isLoggedIn = useSelector((state) => state.userStatus.isLoggedIn)
   const [book, setBook] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -37,7 +38,8 @@ function BookPage() {
       try {
         const res = await fetch(`/api/books/work/${id}`)
         const data = await res.json()
-        setBook(data)
+        // Use author from navigation state if server didn't resolve it
+        setBook({ ...data, author: data.author ?? state?.author ?? 'Unknown' })
       } catch (err) {
         console.error('Failed to fetch book details:', err)
       } finally {
