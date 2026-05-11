@@ -25,6 +25,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Health check — Railway pings this to confirm the app is up
+app.get('/health', (_req, res) => res.status(200).json({ status: 'ok' }));
+
 app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/shelf', shelfRoutes);
@@ -34,7 +37,12 @@ if (process.env.NODE_ENV === 'production') {
   const distPath = path.join(__dirname, '../dist');
   app.use(express.static(distPath));
   app.get('*', (_req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
+    res.sendFile(path.join(distPath, 'index.html'), (err) => {
+      if (err) {
+        console.error('Failed to send index.html:', err);
+        res.status(500).send('Server error');
+      }
+    });
   });
 } else {
   app.use(notFound);
