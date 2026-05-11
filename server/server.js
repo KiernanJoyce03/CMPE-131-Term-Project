@@ -43,7 +43,7 @@ console.log('index.html exists:', fs.existsSync(indexPath));
 
 if (fs.existsSync(indexPath)) {
   app.use(express.static(distPath));
-  app.get('*', (_req, res) => {
+  app.get('{*path}', (_req, res) => {
     res.sendFile(indexPath, (err) => {
       if (err) {
         console.error('sendFile error:', err);
