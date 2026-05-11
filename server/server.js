@@ -9,9 +9,7 @@ import bookRoutes from './routes/booksRoute.js';
 import authRoutes from './routes/authRoute.js';
 import shelfRoutes from './routes/shelfRoute.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-import { connectDB, disconnectDB } from './config/db.js';
-
-await connectDB();
+import { disconnectDB } from './config/db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -29,8 +27,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health check
-app.get('/health', (_req, res) => res.status(200).json({ status: 'ok' }));
+// Health check — just confirms the server is up
+app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 
 app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
